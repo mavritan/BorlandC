@@ -1,3 +1,31 @@
+ using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.IO;
+
+
+namespace Cs
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // 8.2 and 9.1
+            Song mySong = new Song();
+            // l.Add(new Song("Moon", "Mike",null));
+            // l.Add(new Song("Sun", "Peter",l.Last()));
+            // l.Add(new Song("Moon", "Mike",l.Last()));
+            // l.Add(new Song("Sun", "Peter", l.Last()));
+            // l.Add(new Song());
+            // for (int i = 0; i < l.Count; i++)
+            //     l[i].PrintTitle();
+            // for (int i = 0; i < l.Count; i++)
+            //     for (int j = 0; j < l.Count; j++)
+            //         if (l[i].Equals(l[j]))
+            //             Console.WriteLine("Песни " + (i+1).ToString() + " и " + (j+1).ToString() + " одинаковые");
+             
+            Console.ReadKey();
+        }
  class Song
     {
         public Song()
