@@ -1,112 +1,71 @@
-using System;
-
-namespace program8_2
-{
-    class SongBook
+ class Song
     {
-        private Song head;
-        private Song tail;
-        public void AddSong(Song song)
-        {
-            if (head == null)
-            {
-                head = song;
-            }
-            else
-            {
-                tail.SetNext(song);
-                song.SetPrev(tail);
-            }
-            tail = song;
-        }
-        public Song GetHead()
-        {
-            return head;
-        }
-        public Song GetTail()
-        {
-            return tail;
-        }
-    }
-    class Song
-    {
-        string name;
-        string author;
-        private Song next;
-        Song prev;
-
         public Song()
         {
-            this.author = "Автор";
-            this.name = "Песня";
+            name = "";
+            author = "";
+            prev = null;
         }
-        public Song(string author, string name)
+        public Song(string n,string a,Song p)
         {
-            this.author = author;
-            this.name = name;
+            name = n;
+            author = a;
+            prev = p;
         }
-        public Song(string author, string name, Song prev)
+        string name;
+        public string Name
         {
-            this.author = author;
-            this.name = name;
-            this.prev = prev;
+            set
+            {
+                name = value;
+            }
+            get
+            {
+                return name;
+            }
         }
-        public void SetName(string name)
+        string author;
+        public string Author
         {
-            this.name = name;
+            set
+            {
+                author = value;
+            }
+            get
+            {
+                return author;
+            }
         }
-        public void SetaAuthor(String author)
+        Song prev;
+        public Song Prev
         {
-            this.author = author;
-        }
-        public void SetNext(Song next)
-        {
-            this.next = next;
-        }
-        public void SetPrev(Song prev)
-        {
-            this.prev = prev;
-        }
-        public Song GetNext()
-        {
-            return next;
-        }
-        public void PrintTextAndPerformer()
-        {
-            Console.Write("Автор: " + author + "; Название: " + name + "\n");
+            set
+            {
+                prev = value;
+            }
+            get
+            {
+                return prev;
+            }
         }
         public string Title()
         {
-            return (author + "; " + name);
+            return name + " " + author;
         }
-        public override bool Equals(object d)
+        public void PrintTitle()
         {
-            Song two = d as Song;
-            return name.Equals(two.name) && author.Equals(two.author);
+            Console.WriteLine(Title());
         }
-    }
-    class Program
-    {
-        public static void Main(string[] args)
+        public override bool Equals(object obj)
         {
-            SongBook book = new SongBook();
-            Song first = new Song("Ramones", "Pet Semetary");
-            book.AddSong(first);
-            Song second = new Song("Владимир Высоцкий", "Поезд в небеса");
-            book.AddSong(second);
-            Song third = new Song("Ramones", "Pet Semetary");
-            book.AddSong(third);
-            Song fourth = new Song("Garou", "Sous le vent");
-            book.AddSong(fourth);
-            Song current = book.GetHead();
-            do
-            {
-                current.PrintTextAndPerformer();
-                current = current.GetNext();
-            }
-            while (current != null);
-            Console.WriteLine("\nПервая и вторая песня схожи: " + book.GetHead().Equals(book.GetHead().GetNext()));
-            Console.ReadLine();
+            if (obj == null)
+                return false;
+            Song s = obj as Song;
+            if (s == null)
+                return false;
+            if (name == s.name && author == s.author)
+                return true;
+            return false;
         }
+
     }
-}
