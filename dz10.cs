@@ -1,180 +1,59 @@
-using System;
-using System.ComponentModel;
-
-namespace Lesson_10
-{
-    enum Color
+abstract class Figure
     {
-        Red,
-        Green,
-        Blue
+        protected int x;
+        protected int y;
+        protected string Color;
+        protected bool Visible;
+        public abstract void MoveHorizontal(bool b);
+        public abstract void MoveVertical(bool b);
+        public abstract void ChangeColor(string s);
+        public abstract bool Visibility();
+        public abstract void Show();
     }
-
-    interface IShape
+    class Point:Figure
     {
-        double GetSquare();
-    }
-
-    abstract class Figure
-    {
-        private Color _color;
-        private bool _visible;
-
-        public abstract void ShiftX(int difference);
-        public abstract void ShiftY(int difference);
-
-        public virtual void Display()
+        public override void MoveHorizontal(bool b)
         {
-            Console.WriteLine($"color: {_color}; visible: {_visible}");
+            if (b)
+                x++;
+            else
+                x--;
         }
-
-        public void SetColor(Color color)
+        public override void MoveVertical(bool b)
         {
-            if (!Enum.IsDefined(typeof(Color), color))
-                throw new InvalidEnumArgumentException(nameof(color), (int) color, typeof(Color));
-            _color = color;
+            if (b)
+                y++;
+            else
+                y++;
         }
-
-        public void SetVisible(bool visible)
+        public override void ChangeColor(string s)
         {
-            _visible = visible;
+            Color = s;
         }
-
-        public Color GetColor()
+        public override bool Visibility()
         {
-            return _color;
+            return Visible;
         }
-
-        public bool GetVisible()
+        public override void Show()
         {
-            return _visible;
+            Console.WriteLine("Color " + Color + " Visable " + Visible.ToString());
         }
     }
-
-    class Point : Figure
+    class Circle:Point
     {
-        private int _x;
-        private int _y;
-
-        public Point(int x, int y)
+        private double Radius;
+        public double GetSpace()
         {
-            _x = x;
-            _y = y;
-        }
-
-        public override void ShiftX(int difference)
-        {
-            _x = _x + difference;
-        }
-
-        public override void ShiftY(int difference)
-        {
-            _y = _y + difference;
-        }
-
-        public override void Display()
-        {
-            base.Display();
-            Console.WriteLine($"(x,y)=({_x},{_y})");
-        }
-
-        public void SetXy(int x, int y)
-        {
-            _x = x;
-            _y = y;
-        }
-
-        public void SetX(int x)
-        {
-            _x = x;
-        }
-
-        public void SetY(int y)
-        {
-            _y = y;
-        }
-
-        public int GetX()
-        {
-            return _x;
-        }
-
-        public int GetY()
-        {
-            return _y;
+            return 3.14 * Radius * Radius;
         }
     }
-
-    class Circle : Point, IShape
+    class Rectangle:Point
     {
-        private readonly int _radius;
-
-        public Circle(int x, int y, int radius) : base(x, y)
+        double Width;
+        double Length;
+        public double GetSpace()
         {
-            _radius = radius;
-        }
-
-        public double GetSquare()
-        {
-            return Math.PI * Math.Pow(_radius, 2);
-        }
-
-        public override void Display()
-        {
-            base.Display();
-            Console.WriteLine($"radius:{_radius}");
-        }
-    }
-
-    class Rectangle : Point, IShape
-    {
-        private readonly int _length;
-        private readonly int _width;
-
-        public Rectangle(int x, int y, int length, int width) : base(x, y)
-        {
-            _length = length;
-            _width = width;
-        }
-
-        public double GetSquare()
-        {
-            return _length * _width;
-        }
-
-        public override void Display()
-        {
-            base.Display();
-            Console.WriteLine($"length:{_length}; width:{_width}");
-        }
-    }
-    internal class Program
-    {
-        public static void Main(string[] args)
-        {
-            Circle c = new Circle(5, 5, 3);
-            c.SetColor(Color.Blue);
-            c.SetVisible(true);
-
-            Console.WriteLine("Окружность");
-            c.Display();
-
-            c.ShiftX(3);
-            c.ShiftY(-7);
-            c.Display();
-
-            Rectangle r = new Rectangle(2, 7, 4, 10);
-            r.SetColor(Color.Red);
-            r.SetVisible(true);
-            Console.WriteLine("\nПрямоугольник");
-            r.Display();
-
-            r.ShiftX(3);
-            r.ShiftY(-7);
-            r.Display();
-            Console.WriteLine("\nПлощадь");
-            Console.WriteLine(r.GetSquare());
-            Console.ReadKey();
+            return Width * Length;
         }
     }
 }
